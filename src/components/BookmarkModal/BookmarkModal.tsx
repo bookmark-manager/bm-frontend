@@ -21,7 +21,7 @@ export const BookmarkModal: FC<BookmarkModalProps> = ({
   const [opened, { open, close }] = useDisclosure(false);
 
   const form = useForm<BookmarkFormValues>({
-    mode: 'uncontrolled',
+    mode: 'controlled',
     initialValues,
     validateInputOnBlur: true,
     validate: {

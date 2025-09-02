@@ -5,7 +5,8 @@ import type { FC } from 'react';
 import { getFormValuesFromBookmark } from '../../config/create-form-initial-values';
 import { BookmarkModal } from '../BookmarkModal';
 import type { Bookmark as BookmarkType } from '../../types/bookmark';
-import { useEditBookmark } from '../../hooks/useBookmarksQuery';
+import { useDeleteBookmark, useEditBookmark } from '../../hooks/useBookmarksQuery';
+import { modals } from '@mantine/modals';
 
 interface BookmarkProps {
   bookmark: BookmarkType;
@@ -15,6 +16,28 @@ export const Bookmark: FC<BookmarkProps> = ({ bookmark }) => {
   const host = bookmark.url.host;
 
   const { mutateAsync: editBookmark } = useEditBookmark();
+  const { mutateAsync: deleteBookmark } = useDeleteBookmark();
+
+  const openConfirmModal = () =>
+    modals.openConfirmModal({
+      radius: '1.2rem',
+      padding: '1.5rem',
+      withCloseButton: false,
+      title: (
+        <div>
+          <Title order={4}>Подтвердите удаление</Title>
+        </div>
+      ),
+      children: (
+        <Text>
+          Вы уверены, что хотите удалить закладку <b>{bookmark.title}</b> ? Это действие нельзя
+          отменить.
+        </Text>
+      ),
+      labels: { confirm: 'Подтвердить', cancel: 'Отмена' },
+      onConfirm: () => deleteBookmark(bookmark.id),
+      confirmProps: { color: 'black' },
+    });
 
   return (
     <Flex className={classes.container}>
@@ -45,7 +68,7 @@ export const Bookmark: FC<BookmarkProps> = ({ bookmark }) => {
         />
 
         <ActionIcon size={28} variant="transparent">
-          <Trash color="red" opacity={0.6} size={28} />
+          <Trash onClick={openConfirmModal} color="red" opacity={0.6} size={28} />
         </ActionIcon>
       </Flex>
     </Flex>

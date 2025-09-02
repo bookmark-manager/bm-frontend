@@ -22,5 +22,7 @@ export const getBookmarks = async (opts: ListOptions): Promise<PaginatedResponse
 
   return fetch(url)
     .then(resp => resp.json())
-    .then(data => fromPaginatedResponseDto(data, fromBookmarkDto));
+    .then(data => {
+      return fromPaginatedResponseDto(data, fromBookmarkDto);
+    });
 };

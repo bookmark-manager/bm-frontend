@@ -2,7 +2,7 @@ import { Center, Stack } from '@mantine/core';
 import type { ReactNode } from 'react';
 
 interface DataListProps<TData> {
-  data: TData[];
+  data: TData[] | null;
   fallback?: ReactNode;
   renderItem: (item: TData) => ReactNode;
 }
