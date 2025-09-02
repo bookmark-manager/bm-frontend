@@ -1,0 +1,23 @@
+.container {
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2.2rem;
+  border-radius: 15px;
+  border: 1px solid #0a0a0a2f;
+  background-color: #ffffff;
+
+  &:hover {
+    border: 1px solid #0a0a0a96;
+  }
+
+  .title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #141413;
+
+    &:hover {
+      color: #5e5d59;
+    }
+  }
+}

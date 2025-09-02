@@ -1,0 +1,7 @@
+.container{
+    height: 80vh;
+
+    .dataList{
+        height: 100%;
+    }
+}
