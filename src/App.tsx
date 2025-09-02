@@ -1,4 +1,4 @@
-import { Button, Center, Flex, Pagination, Title } from '@mantine/core';
+import { ActionIcon, Button, Center, Flex, Pagination, Title, Tooltip } from '@mantine/core';
 import { useState } from 'react';
 import { Bookmark } from './components/Bookmark';
 import { useCreateBookmark, useGetBookmarks } from './hooks/useBookmarksQuery';
@@ -6,6 +6,8 @@ import { DataList } from './components/DataList';
 import classes from './App.module.css';
 import { BookmarkModal } from './components/BookmarkModal';
 import { getFormValuesFromBookmark } from './config/create-form-initial-values';
+import { Upload } from 'lucide-react';
+import { exportBookmarksHTML } from './api/exportBookmarks';
 
 export const App = () => {
   const perPage = 4;
@@ -17,7 +19,7 @@ export const App = () => {
 
   return (
     <div className={classes.container}>
-      <Flex justify="end">
+      <Flex gap={24} justify="end" align="center">
         <BookmarkModal
           title={<Title order={3}>Новая заметка</Title>}
           initialValues={getFormValuesFromBookmark()}
@@ -28,6 +30,12 @@ export const App = () => {
             </Button>
           )}
         />
+
+        <Tooltip label="Экспорт HTML">
+          <ActionIcon onClick={exportBookmarksHTML} color="black" variant="subtle" size={32}>
+            <Upload color="black" />
+          </ActionIcon>
+        </Tooltip>
       </Flex>
 
       <div className={classes.dataList}>
