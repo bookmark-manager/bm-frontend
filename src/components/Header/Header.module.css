@@ -5,11 +5,12 @@
 
   .searchBar {
     flex-grow: 0.25;
+    margin-left: 18rem;
 
     input {
       border-radius: 0.6rem;
 
-      &:focus{
+      &:focus {
         border-color: #5e5d59;
       }
     }

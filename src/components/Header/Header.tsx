@@ -31,7 +31,7 @@ export const Header: FC<HeaderProps> = ({ search, onSearch }) => {
   };
 
   return (
-    <Flex gap={24} justify="end" align="center">
+    <Flex gap={24} align="center">
       <div className={classes.searchContainer}>
         <SearchBar
           className={classes.searchBar}

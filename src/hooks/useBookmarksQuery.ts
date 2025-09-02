@@ -13,7 +13,7 @@ const deleteBookmarkKey = 'delete-bookmark';
 
 export const useGetBookmarks = (opts: ListOptions) => {
   const { data, ...rest } = useQuery({
-    queryKey: [getBookmarksKey, opts.page, opts.search],
+    queryKey: [getBookmarksKey, opts.page, opts.search, opts.perPage],
     queryFn: () => getBookmarks(opts),
     placeholderData: keepPreviousData
   });

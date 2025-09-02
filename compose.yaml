@@ -1,0 +1,13 @@
+services:
+  client:
+    image: bookmark-manager-frontend:latest
+    build: .
+    ports:
+      - '5173:80'
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - VITE_HOST=0.0.0.0
+      - VITE_BASE_URL=http://localhost:8080
+    container_name: bookmark-manager-frontend

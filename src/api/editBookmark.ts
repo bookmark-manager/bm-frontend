@@ -14,14 +14,16 @@ export const editBookmark = async (id: number, payload: BookmarkFormValues): Pro
 
   const resp = await fetch(url, {
     method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify(toCreateBookmarkDto(payload)),
   });
 
   if (!resp.ok) {
     const errData: ErrorResponse = fromErrorResponseDto(await resp.json());
-    const errMessage = errData.error ? errData : new Error('Failed to edit bookmark');
 
-    throw errMessage;
+    throw errData.error || new Error('Failed to edit bookmark');
   }
 
   const dto: Response<BookmarkDto> = await resp.json();

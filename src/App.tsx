@@ -7,7 +7,7 @@ import classes from './App.module.css';
 import { Header } from './components/Header';
 import { useDebouncedState } from '@mantine/hooks';
 
-const DEFAULT_PER_PAGE = 5;
+const DEFAULT_PER_PAGE = 8;
 const DEFAULT_PAGE = 1;
 
 export const App = () => {
@@ -40,7 +40,7 @@ export const App = () => {
       </div>
 
       <Center>
-        <Pagination color="black" size="lg" total={total} value={page} onChange={setPage} />
+        <Pagination radius={12} color="black" size="lg" total={total} value={page} onChange={setPage} />
       </Center>
     </div>
   );

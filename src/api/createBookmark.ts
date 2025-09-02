@@ -9,14 +9,16 @@ import { getBookmarksApiUrl } from './urls';
 export const createBookmark = async (payload: BookmarkFormValues): Promise<Bookmark> => {
   const resp = await fetch(getBookmarksApiUrl(), {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify(toCreateBookmarkDto(payload)),
   });
 
   if (!resp.ok) {
     const errData: ErrorResponse = fromErrorResponseDto(await resp.json());
-    const errMessage = errData.error ? errData.error : new Error('Failed to create bookmark');
-
-    throw errMessage;
+    
+    throw errData.error || new Error('Failed to create bookmark');
   }
 
   const dto: Response<BookmarkDto> = await resp.json();

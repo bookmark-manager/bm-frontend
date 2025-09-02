@@ -12,8 +12,7 @@ export const deleteBookmark = async (id: number) => {
 
   if (!resp.ok) {
     const errData: ErrorResponse = fromErrorResponseDto(await resp.json());
-    const errMessage = errData.error ? errData : new Error('Failed to delete bookmark');
 
-    throw errMessage;
+    throw errData.error || new Error('Failed to delete bookmark');
   }
 };

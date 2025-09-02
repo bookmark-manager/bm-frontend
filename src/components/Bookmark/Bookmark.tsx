@@ -44,7 +44,7 @@ export const Bookmark: FC<BookmarkProps> = ({ bookmark }) => {
       <Flex align="center" gap={24}>
         <Avatar
           radius={8}
-          size={56}
+          size={40}
           src={`https://www.google.com/s2/favicons?domain=${bookmark.url.host}&sz=${128}`}
         />
         <Stack gap={0}>
@@ -62,19 +62,19 @@ export const Bookmark: FC<BookmarkProps> = ({ bookmark }) => {
         </Stack>
       </Flex>
 
-      <Flex gap={16} className={classes.controls}>
+      <Flex gap={16} align='center' className={classes.controls}>
         <BookmarkModal
           title={<Title order={3}>Редактирование заметки</Title>}
           initialValues={getFormValuesFromBookmark(bookmark)}
           onSubmit={payload => editBookmark({ id: bookmark.id, payload })}
           renderTarget={onClick => (
-            <ActionIcon onClick={onClick} size={28} variant="transparent">
+            <ActionIcon mt={8} onClick={onClick} size={24} variant="transparent">
               <Edit color="black" size={28} />
             </ActionIcon>
           )}
         />
 
-        <ActionIcon size={28} variant="transparent">
+        <ActionIcon size={24} variant="transparent">
           <Trash onClick={openConfirmModal} color="red" opacity={0.6} size={28} />
         </ActionIcon>
       </Flex>
