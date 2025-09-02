@@ -45,7 +45,7 @@ export const BookmarkModal: FC<BookmarkModalProps> = ({
         classNames={{ content: classes.modalContent }}
         opened={opened}
         onClose={close}
-        title={title}
+        title={<div>{title}</div>}
       >
         <form onSubmit={form.onSubmit(values => handleSubmit(values))}>
           <Stack>

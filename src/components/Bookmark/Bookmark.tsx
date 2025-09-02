@@ -5,6 +5,7 @@ import type { FC } from 'react';
 import { getFormValuesFromBookmark } from '../../config/create-form-initial-values';
 import { BookmarkModal } from '../BookmarkModal';
 import type { Bookmark as BookmarkType } from '../../types/bookmark';
+import { useEditBookmark } from '../../hooks/useBookmarksQuery';
 
 interface BookmarkProps {
   bookmark: BookmarkType;
@@ -12,6 +13,8 @@ interface BookmarkProps {
 
 export const Bookmark: FC<BookmarkProps> = ({ bookmark }) => {
   const host = bookmark.url.host;
+
+  const { mutateAsync: editBookmark } = useEditBookmark();
 
   return (
     <Flex className={classes.container}>
@@ -33,7 +36,7 @@ export const Bookmark: FC<BookmarkProps> = ({ bookmark }) => {
         <BookmarkModal
           title={<Title order={3}>Редактирование заметки</Title>}
           initialValues={getFormValuesFromBookmark(bookmark)}
-          onSubmit={() => ''}
+          onSubmit={payload => editBookmark({ id: bookmark.id, payload })}
           renderTarget={onClick => (
             <ActionIcon onClick={onClick} size={28} variant="transparent">
               <Edit color="black" size={28} />
