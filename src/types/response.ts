@@ -1,8 +1,12 @@
-export type PaginatedResponse<TData> = {
+export interface PaginatedResponse<TData> {
   data: TData[];
   totalCount: number;
-};
+}
 
-export type Response<TData> = {
+export interface Response<TData> {
   data: TData;
-};
+}
+
+export interface ErrorResponse {
+  error: Error;
+}

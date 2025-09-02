@@ -8,6 +8,7 @@ import { BookmarkModal } from './components/BookmarkModal';
 import { getFormValuesFromBookmark } from './config/create-form-initial-values';
 import { Upload } from 'lucide-react';
 import { exportBookmarksHTML } from './api/exportBookmarks';
+import { notifications } from '@mantine/notifications';
 
 export const App = () => {
   const perPage = 4;
@@ -16,6 +17,19 @@ export const App = () => {
   const total = totalCount ? Math.ceil(totalCount / perPage) : 0;
 
   const { mutateAsync: createBookmark } = useCreateBookmark();
+
+  const handleExport = async () => {
+    try {
+      await exportBookmarksHTML();
+    } catch (error) {
+      const errMessage = error instanceof Error ? error.message : 'Неизвестная ошибка';
+      notifications.show({
+        title: 'Ошибка',
+        message: `Не удалось экспортировать закладки: ${errMessage}`,
+        color: 'red',
+      });
+    }
+  };
 
   return (
     <div className={classes.container}>
@@ -32,7 +46,7 @@ export const App = () => {
         />
 
         <Tooltip label="Экспорт HTML">
-          <ActionIcon onClick={exportBookmarksHTML} color="black" variant="subtle" size={32}>
+          <ActionIcon onClick={handleExport} color="black" variant="subtle" size={32}>
             <Upload color="black" />
           </ActionIcon>
         </Tooltip>

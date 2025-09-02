@@ -1,3 +1,5 @@
+import type { ErrorResponse } from '../types/response';
+import { fromErrorResponseDto } from './dto/error-response-dto';
 import { getBookmarksApiUrl } from './urls';
 
 export const deleteBookmark = async (id: number) => {
@@ -6,5 +8,12 @@ export const deleteBookmark = async (id: number) => {
 
   params.set('id', id.toString());
 
-  return fetch(url, { method: 'DELETE' });
+  const resp = await fetch(url, { method: 'DELETE' });
+
+  if (!resp.ok) {
+    const errData: ErrorResponse = fromErrorResponseDto(await resp.json());
+    const errMessage = errData.error ? errData : new Error('Failed to delete bookmark');
+
+    throw errMessage;
+  }
 };

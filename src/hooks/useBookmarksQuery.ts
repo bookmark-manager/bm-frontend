@@ -4,6 +4,7 @@ import { createBookmark } from '../api/createBookmark';
 import type { BookmarkFormValues } from '../types/bookmark-form-values';
 import { editBookmark } from '../api/editBookmark';
 import { deleteBookmark } from '../api/deleteBookmark';
+import { notifications } from '@mantine/notifications';
 
 const getBookmarksKey = 'bookmarks';
 const createBookmarkKey = 'create-bookmark';
@@ -32,6 +33,13 @@ export const useCreateBookmark = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [getBookmarksKey] });
     },
+    onError: err => {
+      notifications.show({
+        title: 'Ошибка',
+        message: `Не удалось создать закладку: ${err.message}`,
+        color: 'red',
+      });
+    },
   });
 };
 
@@ -47,6 +55,13 @@ export const useEditBookmark = () => {
     mutationKey: [editBookmarkKey],
     mutationFn: (params: useEditBookmarkParams) => editBookmark(params.id, params.payload),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: [getBookmarksKey] }),
+    onError: err => {
+      notifications.show({
+        title: 'Ошибка',
+        message: `Не удалось редактировать закладку: ${err.message}`,
+        color: 'red',
+      });
+    },
   });
 };
 
@@ -57,5 +72,12 @@ export const useDeleteBookmark = () => {
     mutationKey: [deleteBookmarkKey],
     mutationFn: (id: number) => deleteBookmark(id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: [getBookmarksKey] }),
+    onError: err => {
+      notifications.show({
+        title: 'Ошибка',
+        message: `Не удалось удалить закладку: ${err.message}`,
+        color: 'red',
+      });
+    },
   });
 };

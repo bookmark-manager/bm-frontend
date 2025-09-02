@@ -2,6 +2,11 @@ import { exportHTMLBookmarksApiUrl } from './urls';
 
 export const exportBookmarksHTML = async () => {
   const resp = await fetch(exportHTMLBookmarksApiUrl());
+
+  if (!resp.ok) {
+    throw new Error(`Server error! status: ${resp.status}`);
+  }
+
   const blob = await resp.blob();
   const url = URL.createObjectURL(blob);
 
