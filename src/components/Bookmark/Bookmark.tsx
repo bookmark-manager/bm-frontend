@@ -1,4 +1,4 @@
-import { ActionIcon, Anchor, Flex, Stack, Text, Title } from '@mantine/core';
+import { ActionIcon, Anchor, Avatar, Flex, Stack, Text, Title } from '@mantine/core';
 import { Edit, Trash } from 'lucide-react';
 import classes from './Bookmark.module.css';
 import type { FC } from 'react';
@@ -41,19 +41,26 @@ export const Bookmark: FC<BookmarkProps> = ({ bookmark }) => {
 
   return (
     <Flex className={classes.container}>
-      <Stack gap={0}>
-        <Anchor
-          className={classes.title}
-          href={bookmark.url.toString()}
-          target="_blank"
-          underline="never"
-        >
-          {bookmark.title}
-        </Anchor>
-        <Flex gap={8}>
-          <Text>{bookmark.createdAt.toLocaleDateString('ru')}</Text> • <Text>{host}</Text>
-        </Flex>
-      </Stack>
+      <Flex align="center" gap={24}>
+        <Avatar
+          radius={8}
+          size={56}
+          src={`https://www.google.com/s2/favicons?domain=${bookmark.url.host}&sz=${128}`}
+        />
+        <Stack gap={0}>
+          <Anchor
+            className={classes.title}
+            href={bookmark.url.toString()}
+            target="_blank"
+            underline="never"
+          >
+            {bookmark.title}
+          </Anchor>
+          <Flex gap={8}>
+            <Text>{bookmark.createdAt.toLocaleDateString('ru')}</Text> • <Text>{host}</Text>
+          </Flex>
+        </Stack>
+      </Flex>
 
       <Flex gap={16} className={classes.controls}>
         <BookmarkModal

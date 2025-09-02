@@ -1,57 +1,36 @@
-import { ActionIcon, Button, Center, Flex, Pagination, Title, Tooltip } from '@mantine/core';
+import { Center, Loader, Pagination, Title } from '@mantine/core';
 import { useState } from 'react';
 import { Bookmark } from './components/Bookmark';
-import { useCreateBookmark, useGetBookmarks } from './hooks/useBookmarksQuery';
+import { useGetBookmarks } from './hooks/useBookmarksQuery';
 import { DataList } from './components/DataList';
 import classes from './App.module.css';
-import { BookmarkModal } from './components/BookmarkModal';
-import { getFormValuesFromBookmark } from './config/create-form-initial-values';
-import { Upload } from 'lucide-react';
-import { exportBookmarksHTML } from './api/exportBookmarks';
-import { notifications } from '@mantine/notifications';
+import { Header } from './components/Header';
+import { useDebouncedState } from '@mantine/hooks';
+
+const DEFAULT_PER_PAGE = 5;
+const DEFAULT_PAGE = 1;
 
 export const App = () => {
-  const perPage = 4;
-  const [page, setPage] = useState(1);
-  const { data, totalCount } = useGetBookmarks({ page, perPage, search: '' });
-  const total = totalCount ? Math.ceil(totalCount / perPage) : 0;
+  const [search, setSearch] = useDebouncedState('', 500);
+  const [page, setPage] = useState(DEFAULT_PAGE);
+  const { data, totalCount, isLoading } = useGetBookmarks({
+    page,
+    perPage: DEFAULT_PER_PAGE,
+    search: search,
+  });
+  const total = totalCount ? Math.ceil(totalCount / DEFAULT_PER_PAGE) : 0;
 
-  const { mutateAsync: createBookmark } = useCreateBookmark();
-
-  const handleExport = async () => {
-    try {
-      await exportBookmarksHTML();
-    } catch (error) {
-      const errMessage = error instanceof Error ? error.message : 'Неизвестная ошибка';
-      notifications.show({
-        title: 'Ошибка',
-        message: `Не удалось экспортировать закладки: ${errMessage}`,
-        color: 'red',
-      });
-    }
-  };
+  if (isLoading) {
+    return (
+      <Center h="60vh">
+        <Loader color="black" />
+      </Center>
+    );
+  }
 
   return (
     <div className={classes.container}>
-      <Flex gap={24} justify="end" align="center">
-        <BookmarkModal
-          title={<Title order={3}>Новая заметка</Title>}
-          initialValues={getFormValuesFromBookmark()}
-          onSubmit={payload => createBookmark(payload)}
-          renderTarget={onClick => (
-            <Button radius={10} color="black" onClick={onClick}>
-              Добавить закладку
-            </Button>
-          )}
-        />
-
-        <Tooltip label="Экспорт HTML">
-          <ActionIcon onClick={handleExport} color="black" variant="subtle" size={32}>
-            <Upload color="black" />
-          </ActionIcon>
-        </Tooltip>
-      </Flex>
-
+      <Header search={search} onSearch={setSearch} />
       <div className={classes.dataList}>
         <DataList
           data={data || []}

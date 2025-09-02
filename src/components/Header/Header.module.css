@@ -1,0 +1,17 @@
+.searchContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  .searchBar {
+    flex-grow: 0.25;
+
+    input {
+      border-radius: 0.6rem;
+
+      &:focus{
+        border-color: #5e5d59;
+      }
+    }
+  }
+}

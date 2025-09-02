@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getBookmarks, type ListOptions } from '../api/getBookmarks';
 import { createBookmark } from '../api/createBookmark';
 import type { BookmarkFormValues } from '../types/bookmark-form-values';
@@ -13,8 +13,9 @@ const deleteBookmarkKey = 'delete-bookmark';
 
 export const useGetBookmarks = (opts: ListOptions) => {
   const { data, ...rest } = useQuery({
-    queryKey: [getBookmarksKey],
+    queryKey: [getBookmarksKey, opts.page, opts.search],
     queryFn: () => getBookmarks(opts),
+    placeholderData: keepPreviousData
   });
 
   return {
