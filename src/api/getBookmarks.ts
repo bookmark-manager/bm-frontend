@@ -11,18 +11,18 @@ export interface ListOptions {
 }
 
 export const getBookmarks = async (opts: ListOptions): Promise<PaginatedResponse<Bookmark>> => {
-  const headers = new Headers();
-  headers.append('X-PerPage', opts.perPage.toString());
-  headers.append('X-Page', opts.page.toString());
-
   const url = getBookmarksApiUrl();
+  const params = url.searchParams;
+
+  params.set('per_page', opts.perPage.toString());
+  params.set('page', opts.page.toString());
   if (opts.search !== '') {
-    url.searchParams.set('search', opts.search);
+    params.set('search', opts.search);
   }
 
-  return fetch(url, { headers })
-    .then(resp => resp.json())
-    .then(data => {
-      return fromPaginatedResponseDto(data, fromBookmarkDto);
-    });
+  const resp = await fetch(url);
+  const data = await resp.json();
+  const totalCount = resp.headers.get('X-Total') || '';
+
+  return fromPaginatedResponseDto(data, totalCount, fromBookmarkDto);
 };

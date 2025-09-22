@@ -1,14 +1,10 @@
-import type { PaginatedResponse } from '../../types/response';
-
-export interface PaginatedResponseDto<TDataDto> {
-  data: TDataDto[];
-  total_count?: string;
-}
+import type { PaginatedResponse, Response } from '../../types/response';
 
 export const fromPaginatedResponseDto = <TDataDto, TData>(
-  dto: PaginatedResponseDto<TDataDto>,
+  dto: Response<TDataDto[]>,
+  totalCount: string,
   fromDataDto: (dto: TDataDto) => TData,
 ): PaginatedResponse<TData> => ({
   data: dto.data.map(fromDataDto),
-  totalCount: dto.total_count ? parseInt(dto.total_count) : 0,
+  totalCount: totalCount ? parseInt(totalCount) : 0,
 });

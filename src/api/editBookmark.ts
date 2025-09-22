@@ -7,10 +7,7 @@ import type { Bookmark } from '../types/bookmark';
 import { fromErrorResponseDto } from './dto/error-response-dto';
 
 export const editBookmark = async (id: number, payload: BookmarkFormValues): Promise<Bookmark> => {
-  const url = getBookmarksApiUrl();
-  const params = url.searchParams;
-
-  params.set('id', id.toString());
+  const url = `${getBookmarksApiUrl()}/${id}`;
 
   const resp = await fetch(url, {
     method: 'PATCH',
