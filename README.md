@@ -1,69 +1,167 @@
-# React + TypeScript + Vite
+# 📱 Bookmark Manager Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React frontend for the Bookmark Manager API, built with TypeScript, Vite, and Mantine UI components.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Modern UI** - Clean, minimalist design with Mantine components
+- **Real-time Search** - Debounced search across bookmark titles and URLs
+- **CRUD Operations** - Create, read, update, and delete bookmarks with intuitive modals
+- **Pagination** - Efficient browsing through large bookmark collections
+- **Export Functionality** - Download bookmarks as Netscape HTML format
+- **TypeScript** - Full type safety and excellent developer experience
+- **Form Validation** - Client-side validation with helpful error messages
 
-## Expanding the ESLint configuration
+## 🛠 Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Framework**: React 19 + TypeScript
+- **Build Tool**: Vite 7
+- **UI Library**: Mantine 8
+- **State Management**: TanStack Query (React Query)
+- **Form Handling**: Mantine Form with validation
+- **Icons**: Lucide React
+- **Styling**: CSS Modules + PostCSS
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🚀 Quick Start
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### Prerequisites
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Node.js 22+ and npm/pnpm
+- Docker (for containerized deployment)
+- Running Bookmark Manager API backend
+
+### Installation & Setup
+
+1. **Clone the repository**
+
+   ```bash
+   git clone <repository-url>
+   cd bookmark-manager-frontend
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   # Using npm
+   npm install
+
+   # Using pnpm (recommended)
+   pnpm install
+   ```
+
+3. **Configure environment**
+
+   ```bash
+   # Create .env file
+   echo "VITE_BASE_URL=http://localhost:8080/api/v1" > .env
+   ```
+
+4. **Start development server**
+
+   ```bash
+   npm run dev
+   # or
+   pnpm dev
+   ```
+
+5. **Open in browser**
+   ```
+   http://localhost:5173
+   ```
+
+### Docker Deployment
+
+1. **Build and run with Docker Compose**
+
+   ```bash
+   # Using justfile (recommended)
+   just up
+
+   # Or directly with Docker Compose
+   docker compose up -d
+   ```
+
+2. **Access the application**
+   ```
+   http://localhost:5173
+   ```
+
+### Production Build
+
+```bash
+# Build for production
+npm run build
+# or
+pnpm build
+
+# Preview production build
+npm run preview
+# or
+pnpm preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📋 Available Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Command   | Description              |
+| --------- | ------------------------ |
+| `dev`     | Start development server |
+| `build`   | Build for production     |
+| `lint`    | Run ESLint               |
+| `preview` | Preview production build |
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Justfile Commands
+
+```bash
+just up          # Start containerized app
+just down        # Stop containers
+just logs        # View container logs
+just rebuild     # Rebuild and restart
+just fresh-start # Clean restart
 ```
+
+## 🔧 Configuration
+
+### Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+# Backend API base URL
+VITE_BASE_URL=http://localhost:8080/api/v1
+
+# Development server host (optional)
+VITE_HOST=0.0.0.0
+```
+
+### API Integration
+
+The frontend expects the backend API to be running with the following endpoints:
+
+- `GET /api/v1/bookmarks` - List bookmarks with pagination & search
+- `POST /api/v1/bookmarks` - Create bookmark
+- `PATCH /api/v1/bookmarks/:id` - Update bookmark
+- `DELETE /api/v1/bookmarks/:id` - Delete bookmark
+- `GET /api/v1/bookmarks/export/html` - Export bookmarks
+
+## 🎨 Features Overview
+
+### Bookmark Management
+
+- **Add Bookmarks**: Modal form with URL validation
+- **Edit Bookmarks**: In-place editing with pre-populated data
+- **Delete Bookmarks**: Confirmation modal to prevent accidental deletion
+- **Search**: Real-time search with 500ms debouncing
+
+### User Experience
+
+- **Favicon Display**: Automatic favicon fetching for visual recognition
+- **Loading States**: Smooth loading indicators
+- **Error Handling**: User-friendly error messages
+- **Export Feature**: One-click HTML bookmark export
+
+### Technical Features
+
+- **Type Safety**: Full TypeScript coverage
+- **Query Caching**: Optimized API calls with React Query
+- **Form Validation**: Real-time validation with helpful messages
+- **Code Splitting**: Optimized bundle sizes
