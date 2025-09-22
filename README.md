@@ -26,7 +26,7 @@ A modern React frontend for the Bookmark Manager API, built with TypeScript, Vit
 
 ### Prerequisites
 
-- Node.js 22+ and npm/pnpm
+- Node.js 22+ and pnpm
 - Docker (for containerized deployment)
 - Running Bookmark Manager API backend
 
@@ -42,10 +42,6 @@ A modern React frontend for the Bookmark Manager API, built with TypeScript, Vit
 2. **Install dependencies**
 
    ```bash
-   # Using npm
-   npm install
-
-   # Using pnpm (recommended)
    pnpm install
    ```
 
@@ -59,8 +55,6 @@ A modern React frontend for the Bookmark Manager API, built with TypeScript, Vit
 4. **Start development server**
 
    ```bash
-   npm run dev
-   # or
    pnpm dev
    ```
 
@@ -90,13 +84,9 @@ A modern React frontend for the Bookmark Manager API, built with TypeScript, Vit
 
 ```bash
 # Build for production
-npm run build
-# or
 pnpm build
 
 # Preview production build
-npm run preview
-# or
 pnpm preview
 ```
 
