@@ -1,4 +1,4 @@
-# 📱 Bookmark Manager Frontend
+# 🔖 Bookmark Manager Frontend
 
 A modern React frontend for the Bookmark Manager API, built with TypeScript, Vite, and Mantine UI components.
 
@@ -35,7 +35,7 @@ A modern React frontend for the Bookmark Manager API, built with TypeScript, Vit
 1. **Clone the repository**
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/bookmark-manager/bm-frontend.git
    cd bookmark-manager-frontend
    ```
 
